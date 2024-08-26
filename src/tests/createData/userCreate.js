@@ -10,7 +10,7 @@ const userCreate = async () => {
         phone: "+51918156738"
     }
 
-    await User.create()
+    await User.create(user)
 }
 
 module.exports = userCreate
