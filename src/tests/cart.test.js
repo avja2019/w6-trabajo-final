@@ -129,63 +129,64 @@ test("POST -> 'BASE_URL', should return status code 201, and res.body.title === 
   expect(res.body.cartId).toBe(cart.id)
 })
 
-// test("GET -> 'BASE_URL', should return status code 200, and res.body.length = 1", async () => {
-//   const res = await request(app)
-//     .get(BASE_URL)
+test("GET -> 'BASE_URL', should return status code 200, and res.body.length = 1", async () => {
+  const res = await request(app)
+    .get(BASE_URL)
+    .set('Authorization', `Bearer ${TOKEN}`)
 
-//   // console.log(res.body);
+   //console.log(res.body);
 
-//   expect(res.status).toBe(200)
-//   expect(res.body).toBeDefined()
-//   expect(res.body).toHaveLength(1)
+  expect(res.status).toBe(200)
+  expect(res.body).toBeDefined()
+  expect(res.body).toHaveLength(1)
 
-//   //1:n
-//   expect(res.body[0].category.id).toBeDefined()
-//   expect(res.body[0].category.id).toBe(category.id)
+  //1:n
+  expect(res.body[0].product.id).toBeDefined()
+  expect(res.body[0].product.id).toBe(product.id)
 
-// })
+})
 
-// test("GET -> 'BASE_URL/:id', should return status code 200, and res.body.title === product.title", async () => {
-//   const res = await request(app)
-//     .get(`${BASE_URL}/${productId}`)
+test("GET -> 'BASE_URL/:id', should return status code 200, and res.body.title === product.title", async () => {
+  const res = await request(app)
+    .get(`${BASE_URL}/${cartId}`)
+    .set('Authorization', `Bearer ${TOKEN}`)
+  // console.log(res.body);
 
-//   // console.log(res.body);
+  expect(res.status).toBe(200)
+  expect(res.body).toBeDefined()
 
-//   expect(res.status).toBe(200)
-//   expect(res.body).toBeDefined()
+  //1:n
+  expect(res.body.product.id).toBeDefined()
+  expect(res.body.product.id).toBe(product.id)
+})
 
-//   //1:n
-//   expect(res.body.category.id).toBeDefined()
-//   expect(res.body.category.id).toBe(category.id)
-// })
+test("PUT -> 'BASE_URL/:id', should return status code 200, and res.body.title === updateProduct.title", async () => {
 
-// test("PUT -> 'BASE_URL/:id', should return status code 200, and res.body.title === updateProduct.title", async () => {
+  const updateProduct = {
+    quantity: 10
+  }
+  const res = await request(app)
+    .put(`${BASE_URL}/${cartId}`)
+    .send(updateProduct)
+    .set('Authorization', `Bearer ${TOKEN}`)
 
-//   const updateProduct = {
-//     title: 'zapatos para bebes'
-//   }
-//   const res = await request(app)
-//     .put(`${BASE_URL}/${productId}`)
-//     .send(updateProduct)
-//     .set('Authorization', `Bearer ${TOKEN}`)
+  // console.log(res.body);s
 
-//   // console.log(res.body);s
+  expect(res.status).toBe(200)
+  expect(res.body).toBeDefined()
+  expect(res.body.quantity).toBe(updateProduct.quantity)
 
-//   expect(res.status).toBe(200)
-//   expect(res.body).toBeDefined()
-//   expect(res.body.title).toBe(updateProduct.title)
+  //1:n
+  expect(res.body.productId).toBeDefined()
+  expect(res.body.productId).toBe(product.id)
+})
 
-//   //1:n
-//   expect(res.body.categoryId).toBeDefined()
-//   expect(res.body.categoryId).toBe(category.id)
-// })
+test("DELETE -> 'BASE_URL/:id', should return status code 204", async () => {
+  const res = await request(app)
+    .delete(`${BASE_URL}/${cartId}`)
+    .set('Authorization', `Bearer ${TOKEN}`)
 
-// test("DELETE -> 'BASE_URL/:id', should return status code 204", async () => {
-//   const res = await request(app)
-//     .delete(`${BASE_URL}/${productId}`)
-//     .set('Authorization', `Bearer ${TOKEN}`)
+  // console.log(res.body);
 
-//   // console.log(res.body);
-
-//   expect(res.status).toBe(204)
-// })
+  expect(res.status).toBe(204)
+})
