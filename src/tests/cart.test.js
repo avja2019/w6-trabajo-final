@@ -120,7 +120,7 @@ test("POST -> 'BASE_URL', should return status code 201, and res.body.title === 
     .send(cart)
     .set('Authorization', `Bearer ${TOKEN}`)
 
-   console.log(res.body);
+   //console.log(res.body);
   cartId = res.body.id
 
   //expect(res.status).toBe(201)
